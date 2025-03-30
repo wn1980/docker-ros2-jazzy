@@ -2,9 +2,9 @@ version: "3.8"
 
 services:
   micro-ros-agent:
-    build:
-      context: ./image
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/micro-ros-agent${TAG}
     container_name: ros2_micro_ros_agent_jazzy
     init: true
