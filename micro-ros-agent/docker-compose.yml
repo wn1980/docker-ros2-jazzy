@@ -14,5 +14,5 @@ services:
     command: udp4 --port 8888
     environment:
       - ROS_DOMAIN_ID=50
-    ports:
-      - "8888:8888/udp"
+    # ports:
+    #   - "8888:8888/udp"
