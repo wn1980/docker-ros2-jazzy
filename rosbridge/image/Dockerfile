@@ -13,7 +13,6 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 # Install ROS 2 ${ROS_DISTRO} rosbridge
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-rosbridge-server \
-    # python3-rosbridge-library \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup ROS 2 environment

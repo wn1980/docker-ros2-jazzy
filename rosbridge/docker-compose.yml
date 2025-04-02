@@ -2,9 +2,9 @@ version: "3.8"
 
 services:
   ros2:
-    build:
-      context: ./image
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/ros2-rosbridge-jazzy${TAG}
     container_name: ros2_rosbridge_jazzy
     init: true
@@ -12,5 +12,5 @@ services:
     network_mode: host
     environment:
       - ROS_DOMAIN_ID=50
-    ports:
-      - "9090:9090"
+    # ports:
+    #   - "9090:9090"
