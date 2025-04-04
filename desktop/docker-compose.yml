@@ -51,6 +51,6 @@ services:
     environment:
       - ROS_DOMAIN_ID=50
     #cpus: 4
-    # ports:
-    #  - "8001:8001"
-    #  - "6901:6901"
+    ports:
+     - "8001:8001"
+     - "6901:6901"
