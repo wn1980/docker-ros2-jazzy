@@ -10,7 +10,7 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     
     urdf_path = PathJoinSubstitution(
-        [FindPackageShare("kobuki_description"), "urdf", "kobuki_standalone.urdf.xacro"]
+        [FindPackageShare("kobuki_description"), "urdf", "kobuki_base.urdf.xacro"]
     )
 
     return LaunchDescription([
