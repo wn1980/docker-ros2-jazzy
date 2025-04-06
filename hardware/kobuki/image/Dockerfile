@@ -19,5 +19,7 @@ RUN mkdir -p $HOME/dev_ws/src && \
     echo "source $HOME/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
     echo "DONE"
 
+COPY ./kobuki_node_params.yaml /root/dev_ws/src/kobuki_ros/kobuki_node/config/
+
 # Launch kobuki_node on container start
 CMD ["bash", "-c", "source $HOME/dev_ws/install/setup.bash && ros2 launch kobuki_node kobuki_node-composed-launch.py"]

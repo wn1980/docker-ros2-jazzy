@@ -2,13 +2,17 @@ version: "3.8"
 
 services:
   ros2-kobuki:
-    build:
-      context: ./image
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/ros2-kobuki-jazzy${TAG}
     container_name: ros2_kobuki_jazzy
     init: true
     restart: unless-stopped
     network_mode: host
+    devices:
+      - "/dev:/dev"
+    volumes:
+      - "/dev:/dev"
     environment:
       - ROS_DOMAIN_ID=50
