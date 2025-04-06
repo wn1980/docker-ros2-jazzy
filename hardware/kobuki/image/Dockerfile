@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list
 
 # Setup ROS 2 environment
-COPY ./kobuki-ros-jazzy.sh /
+COPY bin/kobuki-ros-jazzy.sh /
 RUN mkdir -p $HOME/dev_ws/src && \
     bash /kobuki-ros-jazzy.sh && \
     sudo rm -f /kobuki-ros-jazzy.sh && \
@@ -19,7 +19,13 @@ RUN mkdir -p $HOME/dev_ws/src && \
     echo "source $HOME/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
     echo "DONE"
 
-COPY ./kobuki_node_params.yaml /root/dev_ws/src/kobuki_ros/kobuki_node/config/
+# Copy the entrypoint script into the container
+RUN rm -f /ros_entrypoint.sh
+COPY bin/entrypoint.sh /
+COPY app /app
+
+# Set the entrypoint to the bash script
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Launch kobuki_node on container start
-CMD ["bash", "-c", "source $HOME/dev_ws/install/setup.bash && ros2 launch kobuki_node kobuki_node-composed-launch.py"]
+CMD ["ros2 launch /app/launch/bringup.launch.py"]

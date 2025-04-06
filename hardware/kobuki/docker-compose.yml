@@ -1,10 +1,11 @@
 version: "3.8"
 
 services:
+
   ros2-kobuki:
-    # build:
-    #   context: ./image
-    #   dockerfile: Dockerfile
+    build:
+      context: ./image
+      dockerfile: Dockerfile
     image: wn1980/ros2-kobuki-jazzy${TAG}
     container_name: ros2_kobuki_jazzy
     init: true
@@ -16,3 +17,4 @@ services:
       - "/dev:/dev"
     environment:
       - ROS_DOMAIN_ID=50
+    # command: ["turtlebot2_ros2", "bringup.launch.py"]
