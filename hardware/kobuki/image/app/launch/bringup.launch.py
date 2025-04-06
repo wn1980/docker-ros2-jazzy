@@ -13,7 +13,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
     # package root
-    # share_dir = get_package_share_directory('turtlebot2_ros2')
     share_dir = "/app"
 
     # kobuki_ros node
@@ -32,6 +31,42 @@ def generate_launch_description():
             ('odom', '/odom'),
             ('joint_states', '/joint_states')
         ],
+    )
+
+    # cmd_vel_mux
+    params_file = os.path.join(share_dir, 'config', 'cmd_vel_mux_params.yaml')
+
+    with open(params_file, 'r') as f:
+        params = yaml.safe_load(f)['cmd_vel_mux']['ros__parameters']
+
+    cmd_vel_mux_node = ComposableNode(
+        package='cmd_vel_mux',
+        plugin='cmd_vel_mux::CmdVelMux',
+        name='cmd_vel_mux_node',
+        namespace='cmd_vel_mux',
+        remappings=[
+            ('cmd_vel', '/mobile_base/commands/velocity'),
+        ],
+        parameters=[params]
+    )
+
+    # velocity_smoother
+    params_file = os.path.join(share_dir, 'config', 'velocity_smoother_params.yaml')
+
+    with open(params_file, 'r') as f:
+        params = yaml.safe_load(f)['velocity_smoother']['ros__parameters']
+    
+    velocity_smoother_default_node = ComposableNode(
+        package='kobuki_velocity_smoother',
+        plugin='kobuki_velocity_smoother::VelocitySmoother',
+        name='velocity_smoother_default',
+        remappings=[
+            ('velocity_smoother_default/smoothed', '/cmd_vel_mux/input/default'),
+            ('velocity_smoother_default/feedback/cmd_vel', '/mobile_base/commands/velocity'),
+            ('velocity_smoother_default/feedback/odometry', '/odom'),
+            ('velocity_smoother_default/input', '/cmd_vel')
+        ],
+        parameters=[params]
     )
 
     # kobuki_safety_controller
@@ -87,42 +122,6 @@ def generate_launch_description():
         ],
     )
 
-    # velocity_smoother
-    params_file = os.path.join(share_dir, 'config', 'velocity_smoother_params.yaml')
-
-    with open(params_file, 'r') as f:
-        params = yaml.safe_load(f)['velocity_smoother']['ros__parameters']
-    
-    velocity_smoother_default_node = ComposableNode(
-        package='kobuki_velocity_smoother',
-        plugin='kobuki_velocity_smoother::VelocitySmoother',
-        name='velocity_smoother_default',
-        remappings=[
-            ('velocity_smoother_default/smoothed', '/cmd_vel_mux/input/default'),
-            ('velocity_smoother_default/feedback/cmd_vel', '/mobile_base/commands/velocity'),
-            ('velocity_smoother_default/feedback/odometry', '/odom'),
-            ('velocity_smoother_default/input', '/cmd_vel')
-        ],
-        parameters=[params]
-    )
-
-    # cmd_vel_mux
-    params_file = os.path.join(share_dir, 'config', 'cmd_vel_mux_params.yaml')
-
-    with open(params_file, 'r') as f:
-        params = yaml.safe_load(f)['cmd_vel_mux']['ros__parameters']
-
-    cmd_vel_mux_node = ComposableNode(
-        package='cmd_vel_mux',
-        plugin='cmd_vel_mux::CmdVelMux',
-        name='cmd_vel_mux_node',
-        namespace='cmd_vel_mux',
-        remappings=[
-            ('cmd_vel', '/mobile_base/commands/velocity'),
-        ],
-        parameters=[params]
-    )
-
     # packs to the container
     mobile_base_container = ComposableNodeContainer(
             package='rclcpp_components',
@@ -131,11 +130,11 @@ def generate_launch_description():
             namespace='',
             composable_node_descriptions=[
                 kobuki_node,
-                safety_controller_node,
                 cmd_vel_mux_node,
+                velocity_smoother_default_node,
+                safety_controller_node,
                 kobuki_auto_docking_node,
                 kobuki_bumper2pc_node,
-                velocity_smoother_default_node
             ],
             output='both',
     )
@@ -147,34 +146,8 @@ def generate_launch_description():
         output='screen',
     )
 
-    # robot_description
-    # description_launch_path = PathJoinSubstitution(
-    #     [FindPackageShare('turtlebot2_ros2'), 'launch', 'description.launch.py']
-    # )
-
-    # robot_description = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(description_launch_path)
-    # )
-
     # Finally, return all nodes
     return LaunchDescription([
         mobile_base_container,
         activation_button_node,
-        # robot_description,
     ])
-
-"""
-
-
-        ExecuteProcess(
-            cmd=['ros2', 'topic', 'pub', '/mobile_base/enable', 'std_msgs/msg/Empty', '--once'],
-            output='screen'
-        )
-        
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_tf_pub_laser',
-            arguments=['0', '0', '0','0', '0', '0', '1','base_footprint','base_link'],
-        ),
-"""

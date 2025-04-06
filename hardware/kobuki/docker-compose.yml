@@ -3,9 +3,9 @@ version: "3.8"
 services:
 
   ros2-kobuki:
-    build:
-      context: ./image
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/ros2-kobuki-jazzy${TAG}
     container_name: ros2_kobuki_jazzy
     init: true
@@ -26,6 +26,4 @@ services:
     network_mode: host
     environment:
       - ROS_DOMAIN_ID=50
-    command: ["ros2 launch /app/launch/description.launch.py"]
-
-  
+    command: ["kobuki_description", "kobuki_description.launch.py structure:=False"]
