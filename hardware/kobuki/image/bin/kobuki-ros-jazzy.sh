@@ -3,14 +3,14 @@
 set -e
 
 apt update && apt install -y \
-  git \
-  libusb-1.0-0-dev \
-  libftdi1-dev \
-  libuvc-dev \
   ros-${ROS_DISTRO}-sophus \
   ros-${ROS_DISTRO}-ecl-tools \
   ros-${ROS_DISTRO}-kobuki-ros-interfaces \
   ros-${ROS_DISTRO}-kobuki-velocity-smoother \
+  libusb-1.0-0-dev \
+  libftdi1-dev \
+  libuvc-dev \
+  git \
   # ros-${ROS_DISTRO}-kobuki-core \
   # ros-${ROS_DISTRO}-kobuki-ftdi \
   # ros-${ROS_DISTRO}-kobuki-firmware \

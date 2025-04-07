@@ -2,10 +2,12 @@
 
 set -e
 
-sudo apt update && sudo apt-get install -y \
+apt update && apt install -y \
+  ros-${ROS_DISTRO}-tf2-ros \
+  build-essential \
   git
 
-DEV_WS=$HOME/dev_ws
+DEV_WS=/opt/dev_ws
 
 if [ ! -d $DEV_WS/src/ydlidar_ros2_driver ]; then
 
@@ -21,12 +23,14 @@ if [ ! -d $DEV_WS/src/ydlidar_ros2_driver ]; then
   mkdir -p YDLidar-SDK/build
   cd YDLidar-SDK/build
   cmake ..
-  sudo make install
+  make install
   rm -rf ~/YDLidar-SDK
 
 fi
 
-sudo apt-get update #&& sudo apt-get upgrade -y 
+apt update && apt install ros-dev-tools -y
+
+rosdep init && rosdep update
 
 # make and install
 cd $DEV_WS
@@ -39,11 +43,8 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 colcon build --symlink-install
 
 # Install additionals and clean
-sudo apt-get install -y \
-  #ros-${ROS_DISTRO}-kobuki-core \
-  #ros-${ROS_DISTRO}-kobuki-ftdi \
-  #ros-${ROS_DISTRO}-kobuki-firmware \
+apt install -y \
   man \
-  && sudo apt-get autoremove -y \
-  && sudo apt-get clean \
-  && sudo rm -rf /var/lib/apt/lists/*
+  && apt autoremove -y \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
