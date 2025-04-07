@@ -51,7 +51,7 @@ sudo apt-get update #&& sudo apt-get upgrade -y
 cd $ROS_WS
 
 # sudo rosdep install -i --from-path src --rosdistro jazzy -y
-rosdep install --from-paths src --ignore-src -r -y
+sudo rosdep install --from-paths src --ignore-src -r -y
   
 source /opt/ros/${ROS_DISTRO}/setup.bash
 
