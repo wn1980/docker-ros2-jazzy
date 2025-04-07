@@ -3,7 +3,7 @@ set -e
 
 # Source the ROS 2 environment
 source /opt/ros/$ROS_DISTRO/setup.bash
-source /opt/dev_ws/install/setup.bash
+source /workspace/dev_ws/install/setup.bash
 
 # Check if at least a package name and launch file are provided as arguments
 if [ -n "$1" ] && [ -n "$2" ]; then

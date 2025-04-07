@@ -28,4 +28,4 @@ COPY app /app
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Launch kobuki_node on container start
-CMD ["ros2 launch /app/launch/ydlidar_launch.py"]
+CMD ["ros2 launch /app/launch/ydlidar.launch.py"]

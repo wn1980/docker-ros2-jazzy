@@ -7,7 +7,7 @@ apt update && apt install -y \
   build-essential \
   git
 
-DEV_WS=/opt/dev_ws
+DEV_WS=/workspace/dev_ws
 
 if [ ! -d $DEV_WS/src/ydlidar_ros2_driver ]; then
 
@@ -19,7 +19,7 @@ if [ ! -d $DEV_WS/src/ydlidar_ros2_driver ]; then
 
   # install ydlidar_sdk first
   cd ~
-  git clone https://github.com/YDLIDAR/YDLidar-SDK.git 
+  git clone https://github.com/YDLIDAR/YDLidar-SDK.git -b V1.2.7
   mkdir -p YDLidar-SDK/build
   cd YDLidar-SDK/build
   cmake ..

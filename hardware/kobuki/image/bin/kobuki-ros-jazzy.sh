@@ -15,7 +15,7 @@ apt update && apt install -y \
   # ros-${ROS_DISTRO}-kobuki-ftdi \
   # ros-${ROS_DISTRO}-kobuki-firmware \
   
-ROS_WS=$HOME/dev_ws
+ROS_WS=/workspace/dev_ws
 
 rm -rf $ROS_WS
 
