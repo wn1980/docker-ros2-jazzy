@@ -17,6 +17,7 @@ services:
       - "/dev:/dev"
     environment:
       - ROS_DOMAIN_ID=50
+    command: ["ros2 launch /app/launch/bringup.launch.py"]
 
   ros2-kobuki-description:
     image: wn1980/ros2-kobuki-jazzy${TAG}

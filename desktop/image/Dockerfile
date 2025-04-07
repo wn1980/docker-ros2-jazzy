@@ -178,21 +178,21 @@ RUN echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
 
 #RUN sudo apt-get update && sudo apt-get upgrade -y
 
-RUN mkdir -p $HOME/dev_ws/src && \
-    #bash /turtlebot2.sh && \
-    #sudo rm -f /turtlebot2.sh && \
-    #cd $HOME/dev_ws/src && \
-    #git clone https://github.com/kobuki-base/kobuki_ros_interfaces.git && \
-    #git clone https://github.com/YDLIDAR/ydlidar_ros2_driver.git && \
-    #git clone https://github.com/wn1980/turtlebot2_ros2.git && \
-    #git clone https://github.com/kobuki-base/kobuki_ros.git && \
-	#mv kobuki_ros/kobuki_description ./ && \
-	#rm -rf kobuki_ros && \
-    cd $HOME/dev_ws && \
-    sudo rosdep install -i --from-path src --rosdistro humble -y && \
-    source /opt/ros/${ROS_DISTRO}/setup.bash && \
-    colcon build --symlink-install && \
-    echo "DONE"
+# RUN mkdir -p $HOME/dev_ws/src && \
+#     #bash /turtlebot2.sh && \
+#     #sudo rm -f /turtlebot2.sh && \
+#     #cd $HOME/dev_ws/src && \
+#     #git clone https://github.com/kobuki-base/kobuki_ros_interfaces.git && \
+#     #git clone https://github.com/YDLIDAR/ydlidar_ros2_driver.git && \
+#     #git clone https://github.com/wn1980/turtlebot2_ros2.git && \
+#     #git clone https://github.com/kobuki-base/kobuki_ros.git && \
+# 	#mv kobuki_ros/kobuki_description ./ && \
+# 	#rm -rf kobuki_ros && \
+#     cd $HOME/dev_ws && \
+#     sudo rosdep install -i --from-path src --rosdistro humble -y && \
+#     source /opt/ros/${ROS_DISTRO}/setup.bash && \
+#     colcon build --symlink-install && \
+#     echo "DONE"
 
 # https://superuser.com/questions/555310/bash-save-history-without-exit
 RUN echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc && \ 

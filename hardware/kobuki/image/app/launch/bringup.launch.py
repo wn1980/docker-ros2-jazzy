@@ -15,6 +15,23 @@ def generate_launch_description():
     # package root
     share_dir = "/app"
 
+    # cmd_vel_mux
+    params_file = os.path.join(share_dir, 'config', 'cmd_vel_mux_params.yaml')
+
+    with open(params_file, 'r') as f:
+        params = yaml.safe_load(f)['cmd_vel_mux']['ros__parameters']
+
+    cmd_vel_mux_node = ComposableNode(
+        package='cmd_vel_mux',
+        plugin='cmd_vel_mux::CmdVelMux',
+        name='cmd_vel_mux_node',
+        namespace='cmd_vel_mux',
+        remappings=[
+            ('cmd_vel', '/mobile_base/commands/velocity'),
+        ],
+        parameters=[params]
+    )
+    
     # kobuki_ros node
     params_file = os.path.join(share_dir, 'config/kobuki', 'kobuki_node_params.yaml')
     
@@ -31,23 +48,6 @@ def generate_launch_description():
             ('odom', '/odom'),
             ('joint_states', '/joint_states')
         ],
-    )
-
-    # cmd_vel_mux
-    params_file = os.path.join(share_dir, 'config', 'cmd_vel_mux_params.yaml')
-
-    with open(params_file, 'r') as f:
-        params = yaml.safe_load(f)['cmd_vel_mux']['ros__parameters']
-
-    cmd_vel_mux_node = ComposableNode(
-        package='cmd_vel_mux',
-        plugin='cmd_vel_mux::CmdVelMux',
-        name='cmd_vel_mux_node',
-        namespace='cmd_vel_mux',
-        remappings=[
-            ('cmd_vel', '/mobile_base/commands/velocity'),
-        ],
-        parameters=[params]
     )
 
     # velocity_smoother
@@ -129,8 +129,8 @@ def generate_launch_description():
             name='mobile_base_container',
             namespace='',
             composable_node_descriptions=[
-                kobuki_node,
                 cmd_vel_mux_node,
+                kobuki_node,
                 velocity_smoother_default_node,
                 safety_controller_node,
                 kobuki_auto_docking_node,

@@ -12,11 +12,10 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 
 # Setup ROS 2 environment
 COPY bin/kobuki-ros-jazzy.sh /
-RUN mkdir -p $HOME/dev_ws/src && \
-    bash /kobuki-ros-jazzy.sh && \
+RUN bash /kobuki-ros-jazzy.sh && \
     sudo rm -f /kobuki-ros-jazzy.sh && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> $HOME/.bashrc && \
-    echo "source $HOME/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
+    echo "source /workspace/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
     echo "DONE"
 
 # Copy the entrypoint script into the container

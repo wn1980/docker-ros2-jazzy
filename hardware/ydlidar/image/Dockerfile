@@ -12,11 +12,10 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 
 # Setup ROS 2 environment
 COPY bin/ydlidar.sh /
-RUN mkdir -p /opt/dev_ws/src && \
-    bash /ydlidar.sh && \
+RUN bash /ydlidar.sh && \
     sudo rm -f /ydlidar.sh && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> $HOME/.bashrc && \
-    echo "source /opt/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
+    echo "source /workspace/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
     echo "DONE"
 
 # Copy the entrypoint script into the container

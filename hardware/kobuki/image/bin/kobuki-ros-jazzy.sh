@@ -17,8 +17,6 @@ apt update && apt install -y \
   
 ROS_WS=/workspace/dev_ws
 
-rm -rf $ROS_WS
-
 if [ ! -d $ROS_WS/src/kobuki_ros ]; then
 
   mkdir -p $ROS_WS/src
@@ -38,7 +36,8 @@ if [ ! -d $ROS_WS/src/kobuki_ros ]; then
   git clone https://github.com/kobuki-base/kobuki_core.git -b 1.4.1
   # git clone https://github.com/kobuki-base/kobuki_ros.git -b 1.2.0
 
-  ### REF: https://github.com/IntelligentRoboticsLabs/kobuki/blob/jazzy/thirdparty.repos
+  ### REFs: https://github.com/IntelligentRoboticsLabs/kobuki
+  ###       https://github.com/IntelligentRoboticsLabs/kobuki/blob/jazzy/thirdparty.repos
   git clone https://github.com/Juancams/ecl_core.git -b devel
   git clone https://github.com/Juancams/ecl_lite.git -b ros2-jazzy
   git clone https://github.com/Juancams/kobuki_ros.git -b jazzy-devel
