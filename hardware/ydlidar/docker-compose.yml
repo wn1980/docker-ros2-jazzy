@@ -15,12 +15,12 @@ services:
       - "/dev:/dev"
     volumes:
       - "/dev:/dev"
-    healthcheck:
-      test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
-      interval: 5s
-      timeout: 3s
-      retries: 3
-      start_period: 10s
+    # healthcheck:
+    #   test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
+    #   interval: 5s
+    #   timeout: 3s
+    #   retries: 3
+    #   start_period: 10s
     environment:
       - ROS_DOMAIN_ID=50
     command: ["ros2 launch /app/launch/ydlidar.launch.py params_file:=/app/params/X4.yaml x:=0. y:=0. z:=0.1"]
