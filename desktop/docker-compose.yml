@@ -47,7 +47,7 @@ services:
       - "workspace:/workspace"
       - "~/.gitconfig:/home/ubuntu/.gitconfig"
     healthcheck:
-      test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
+      test: ["CMD-SHELL", "test -e /tmp/.X11-unix/X9"]
       interval: "1m"
       retries: 20
     environment:
