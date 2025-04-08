@@ -176,32 +176,22 @@ RUN echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
 # compile turtlebot2 packages from sources
 #COPY ./app/install/turtlebot2.sh /
 
-#RUN sudo apt-get update && sudo apt-get upgrade -y
-
-# RUN mkdir -p $HOME/dev_ws/src && \
-#     #bash /turtlebot2.sh && \
-#     #sudo rm -f /turtlebot2.sh && \
-#     #cd $HOME/dev_ws/src && \
-#     #git clone https://github.com/kobuki-base/kobuki_ros_interfaces.git && \
-#     #git clone https://github.com/YDLIDAR/ydlidar_ros2_driver.git && \
-#     #git clone https://github.com/wn1980/turtlebot2_ros2.git && \
-#     #git clone https://github.com/kobuki-base/kobuki_ros.git && \
-# 	#mv kobuki_ros/kobuki_description ./ && \
-# 	#rm -rf kobuki_ros && \
-#     cd $HOME/dev_ws && \
-#     sudo rosdep install -i --from-path src --rosdistro humble -y && \
-#     source /opt/ros/${ROS_DISTRO}/setup.bash && \
-#     colcon build --symlink-install && \
-#     echo "DONE"
+RUN mkdir -p /workspace/dev_ws/src && \
+    cd /workspace/dev_ws && \
+    sudo rosdep install --from-paths src --ignore-src -r -y && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    colcon build --symlink-install && \
+    echo "DONE"
 
 # https://superuser.com/questions/555310/bash-save-history-without-exit
 RUN echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc && \ 
     echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc && \
     echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
-    echo "source $HOME/dev_ws/install/setup.bash" >> ~/.bashrc && \
-    echo "export TURTLEBOT_BASE=kobuki" >> ~/.bashrc && \
-    echo "export TURTLEBOT_3D_SENSOR=asus_xtion_pro" >> ~/.bashrc && \
-    echo "export TURTLEBOT_MAP_FILE=~/workspace/maps/map.yaml" >> ~/.bashrc
+    echo "source /workspace/dev_ws/install/setup.bash" >> ~/.bashrc && \
+    # echo "export TURTLEBOT_BASE=kobuki" >> ~/.bashrc && \
+    # echo "export TURTLEBOT_3D_SENSOR=asus_xtion_pro" >> ~/.bashrc && \
+    # echo "export TURTLEBOT_MAP_FILE=~/workspace/maps/map.yaml" >> ~/.bashrc && \
+    echo "Done"
 
 COPY ./test_imu.rviz /home/${USERNAME}/
 COPY ./view_imu.sh /home/${USERNAME}/

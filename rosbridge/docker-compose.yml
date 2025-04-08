@@ -10,6 +10,12 @@ services:
     init: true
     restart: unless-stopped
     network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "ros2 node list | grep /rosbridge_server"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
     environment:
       - ROS_DOMAIN_ID=50
     # ports:

@@ -12,6 +12,12 @@ services:
     network_mode: host
     privileged: true
     command: udp4 --port 8888
+    healthcheck:
+      test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
     environment:
       - ROS_DOMAIN_ID=50
     # ports:

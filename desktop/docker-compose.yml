@@ -29,7 +29,9 @@ services:
   #   command: udp4 --port 8888
 
   ros2:
-    # build: ./image
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/ros2-jazzy${TAG}
     container_name: ros2_jazzy
     init: true
@@ -45,12 +47,11 @@ services:
       - "workspace:/workspace"
       - "~/.gitconfig:/home/ubuntu/.gitconfig"
     healthcheck:
-      test: ["CMD-SHELL", "test -e /tmp/.X11-unix/X9"]
+      test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
       interval: "1m"
       retries: 20
     environment:
       - ROS_DOMAIN_ID=50
-    #cpus: 4
     # ports:
     #  - "8008:8008"
     #  - "6901:6901"
