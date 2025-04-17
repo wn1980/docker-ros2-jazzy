@@ -11,9 +11,20 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list
 
 # Setup ROS 2 environment
-COPY bin/ydlidar.sh /
-RUN bash /ydlidar.sh && \
-    sudo rm -f /ydlidar.sh && \
+RUN apt update && apt install -y \
+    ros-${ROS_DISTRO}-tf2-ros \
+    ros-dev-tools \
+    python3-pip
+
+RUN pip install pyserial --break-system-package && \
+    rosdep init && rosdep update
+
+RUN mkdir -p /workspace/dev_ws/src
+COPY ./imu_sensor /workspace/dev_ws/src
+RUN cd /workspace/dev_ws/ && \
+    rosdep install --from-paths src --ignore-src -r -y && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    colcon build --symlink-install && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> $HOME/.bashrc && \
     echo "source /workspace/dev_ws/install/setup.bash" >> $HOME/.bashrc && \
     echo "DONE"
@@ -21,10 +32,9 @@ RUN bash /ydlidar.sh && \
 # Copy the entrypoint script into the container
 RUN rm -f /ros_entrypoint.sh
 COPY bin/entrypoint.sh /
-COPY app /app
 
 # Set the entrypoint to the bash script
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Launch node on container start
-CMD ["ros2 launch /app/launch/ydlidar.launch.py"]
+CMD ["ros2 launch imu_sensor imu_sensor.launch.py"]

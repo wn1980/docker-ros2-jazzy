@@ -26,5 +26,5 @@ COPY app /app
 # Set the entrypoint to the bash script
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Launch kobuki_node on container start
+# Launch node on container start
 CMD ["ros2 launch /app/launch/bringup.launch.py"]

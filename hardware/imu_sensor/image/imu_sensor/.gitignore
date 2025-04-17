@@ -1,0 +1,70 @@
+# ROS2 and build system files
+build/
+install/
+log/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg-info/
+*.swp
+*.swo
+*~
+
+# IDE specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.egg-info/
+dist/
+*.profraw
+*.profdata
+
+# Documentation
+docs/_build/
+docs/generated/
+
+# Log files
+*.log
+*.bag
+*.mcap
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Python cache and virtual environment
+*.py[cod]
+__pycache__/
+venv/
+env/
+*.venv/
+
+# C++ compilation files
+*.o
+*.a
+*.la
+*.lo
+*.d
+*.dylib
+
+# Coverage files
+*.gcda
+*.gcno
+*.gcov
+
+# QtCreator files
+*.user
+*.autosave
+
+# ROS2 specific ignores
+*.rosinstall
+.repo/
