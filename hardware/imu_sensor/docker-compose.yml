@@ -3,9 +3,9 @@ version: "3.8"
 services:
 
   imu-sensor:
-    # build:
-    #   context: ./image
-    #   dockerfile: Dockerfile
+    build:
+      context: ./image
+      dockerfile: Dockerfile
     image: wn1980/ros2-imu-sensor-jazzy${TAG}
     container_name: ros2_imu_sensor_jazzy
     init: true
@@ -24,3 +24,23 @@ services:
     environment:
       - ROS_DOMAIN_ID=50
     # command: ["imu_sensor", "imu_sensor.launch.py"]
+
+  imu-fusion:
+    image: wn1980/ros2-imu-sensor-jazzy${TAG}
+    container_name: ros2_imu_fusion_jazzy
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - "/dev:/dev"
+    volumes:
+      - "/dev:/dev"
+    # healthcheck:
+    #   test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
+    #   interval: 5s
+    #   timeout: 3s
+    #   retries: 3
+    #   start_period: 10s
+    environment:
+      - ROS_DOMAIN_ID=50
+    command: ["ros2 launch /app/launch/ekf.launch.py"]

@@ -13,6 +13,7 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 # Setup ROS 2 environment
 RUN apt update && apt install -y \
     ros-${ROS_DISTRO}-tf2-ros \
+    ros-${ROS_DISTRO}-robot-localization \
     ros-dev-tools \
     python3-pip
 
@@ -32,6 +33,7 @@ RUN cd /workspace/dev_ws/ && \
 # Copy the entrypoint script into the container
 RUN rm -f /ros_entrypoint.sh
 COPY bin/entrypoint.sh /
+COPY app /app
 
 # Set the entrypoint to the bash script
 ENTRYPOINT ["/entrypoint.sh"]
