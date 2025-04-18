@@ -3,9 +3,9 @@ version: "3.8"
 services:
 
   imu-sensor:
-    build:
-      context: ./image
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./image
+    #   dockerfile: Dockerfile
     image: wn1980/ros2-imu-sensor-jazzy${TAG}
     container_name: ros2_imu_sensor_jazzy
     init: true
