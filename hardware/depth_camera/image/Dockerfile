@@ -13,6 +13,7 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 # Setup ROS 2 environment
 RUN apt update && apt install -y \
     ros-${ROS_DISTRO}-openni2-camera \
+    ros-${ROS_DISTRO}-pointcloud-to-laserscan \
     ros-dev-tools
 
 RUN rosdep init && rosdep update

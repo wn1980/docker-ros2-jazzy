@@ -24,3 +24,23 @@ services:
     environment:
       - ROS_DOMAIN_ID=50
     # command: ["openni2_camera", "camera_with_cloud.launch.py"]
+
+  pointcloud-to-laserscan:
+    image: wn1980/ros2-depth-camera-jazzy${TAG}
+    container_name: ros2_pointcloud_to_laserscan_jazzy
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - "/dev:/dev"
+    volumes:
+      - "/dev:/dev"
+    # healthcheck:
+    #   test: ["CMD-SHELL", "ros2 topic list | grep /rosout"]
+    #   interval: 5s
+    #   timeout: 3s
+    #   retries: 3
+    #   start_period: 10s
+    environment:
+      - ROS_DOMAIN_ID=50
+    command: ["pointcloud_to_laserscan", "sample_pointcloud_to_laserscan_launch.py"]
