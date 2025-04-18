@@ -20,7 +20,7 @@ def generate_launch_description():
             }]
         ),
         
-        # Static TF from module_frame to imu_frame
+        # Static TF from imu_sensor_module_frame to imu_frame
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',
@@ -33,12 +33,12 @@ def generate_launch_description():
                 '--roll', '0',
                 '--pitch', '0',
                 '--yaw', '0',
-                '--frame-id', 'module_frame',
+                '--frame-id', 'imu_sensor_module_frame',
                 '--child-frame-id', 'imu_frame'
             ]
         ),
         
-        # Static TF from module_frame to mag_frame (if magnetometer is co-located)
+        # Static TF from imu_sensor_module_frame to mag_frame (if magnetometer is co-located)
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',
@@ -51,7 +51,7 @@ def generate_launch_description():
                 '--roll', '0',
                 '--pitch', '0',
                 '--yaw', '0',
-                '--frame-id', 'module_frame',
+                '--frame-id', 'imu_sensor_module_frame',
                 '--child-frame-id', 'mag_frame'
             ]
         ),

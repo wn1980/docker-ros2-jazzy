@@ -12,17 +12,13 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 
 # Setup ROS 2 environment
 RUN apt update && apt install -y \
-    ros-${ROS_DISTRO}-tf2-ros \
-    ros-dev-tools \
-    python3-pip
+    ros-${ROS_DISTRO}-openni2-camera \
+    ros-dev-tools
 
-RUN rosdep init && rosdep update && \
-    pip install pyserial --break-system-package
+RUN rosdep init && rosdep update
 
-RUN mkdir -p /workspace/dev_ws/src
-COPY ./imu_sensor /workspace/dev_ws/src
-RUN cd /workspace/dev_ws/ && \
-    rosdep install --from-paths src --ignore-src -r -y && \
+RUN mkdir -p /workspace/dev_ws/src && \
+    cd /workspace/dev_ws/ && \
     source /opt/ros/${ROS_DISTRO}/setup.bash && \
     colcon build --symlink-install && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> $HOME/.bashrc && \
@@ -37,4 +33,4 @@ COPY bin/entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Launch node on container start
-CMD ["ros2 launch imu_sensor imu_sensor.launch.py"]
+CMD ["ros2 launch openni2_camera camera_with_cloud.launch.py"]
